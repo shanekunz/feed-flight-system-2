@@ -1,11 +1,24 @@
 import { routes, Link } from '@redwoodjs/router'
-import { Grid, GridItem } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { Tabs, TabList, Tab } from '@chakra-ui/react'
+import { useAuth } from '@redwoodjs/auth'
 
 const BlogLayout = ({ children }) => {
+  const { isAuthenticated, currentUser, logOut } = useAuth()
   return (
     <>
       <Tabs>
+        <div className="flex-between">
+          {isAuthenticated ? (
+            <div>
+              <span>Logged in as {currentUser.email}</span>{' '}
+              <button type="button" onClick={logOut}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to={routes.login()}>Login</Link>
+          )}
+        </div>
         <TabList>
           <Link to={routes.home()}>
             <Tab>Home</Tab>
