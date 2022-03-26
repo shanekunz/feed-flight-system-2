@@ -18,6 +18,7 @@ import {
   FormErrorMessage,
   Container,
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
 const CREATE_CONTACT = gql`
   mutation CreateContactMutation($input: CreateContactInput!) {
@@ -32,11 +33,16 @@ const ContactPage = () => {
   const onSubmit = (data) => {
     create({ variables: { input: data } })
   }
+  const [errorField, setErrorField] = useState()
 
   const [create, { loading, error }] = useMutation(CREATE_CONTACT, {
     onCompleted: () => {
       toast.success('Thank you for your submission!')
       formMethods.reset()
+    },
+    onError: (error) => {
+      setErrorField(error.toString().split(' ')[1])
+      console.log(errorField)
     },
   })
 
@@ -55,36 +61,21 @@ const ContactPage = () => {
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
             <Input
+              isInvalid={errorField == 'name'}
               as={TextField}
               name="name"
-              validation={{ required: true }}
-              errorClassName="error"
             />
-            <FormErrorMessage as={FieldError} name="name" className="error" />
+            <FormErrorMessage as={FieldError} name="name" />
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={errorField == 'email'}>
             <FormLabel htmlFor="email">Email address</FormLabel>
-            <Input
-              as={TextField}
-              name="email"
-              validation={{ required: true }}
-              errorClassName="error"
-            />
-            <FormErrorMessage as={FieldError} name="email" className="error" />
+            <Input as={TextField} name="email" />
+            <FormErrorMessage as={FieldError} name="email" />
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={errorField == 'message'}>
             <FormLabel htmlFor="message">Message</FormLabel>
-            <Textarea
-              as={TextAreaField}
-              name="message"
-              validation={{ required: true }}
-              errorClassName="error"
-            />
-            <FormErrorMessage
-              as={FieldError}
-              name="message"
-              className="error"
-            />
+            <Textarea as={TextAreaField} name="message" />
+            <FormErrorMessage as={FieldError} name="message" />
           </FormControl>
           <Button as={Submit} type="submit" disabled={loading} mt={4}>
             Save
