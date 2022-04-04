@@ -65,17 +65,23 @@ const ContactPage = () => {
               as={TextField}
               name="name"
             />
-            <FormErrorMessage as={FieldError} name="name" />
+            <FormErrorMessage>
+              <FieldError name="name" className="error" />
+            </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errorField == 'email'}>
             <FormLabel htmlFor="email">Email address</FormLabel>
             <Input as={TextField} name="email" />
-            <FormErrorMessage as={FieldError} name="email" />
+            <FormErrorMessage>
+              <FieldError name="email" className="error" />
+            </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errorField == 'message'}>
             <FormLabel htmlFor="message">Message</FormLabel>
             <Textarea as={TextAreaField} name="message" />
-            <FormErrorMessage as={FieldError} name="message" />
+            <FormErrorMessage>
+              <FieldError name="message" className="error" />
+            </FormErrorMessage>
           </FormControl>
           <Button as={Submit} type="submit" disabled={loading} mt={4}>
             Save

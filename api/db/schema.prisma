@@ -35,3 +35,133 @@ model User {
   resetToken          String?
   resetTokenExpiresAt DateTime?
 }
+
+model MenuItem_Order {
+  id         Int           @id @default(autoincrement())
+  menuItemId Int
+  order      Order         @relation(fields: [orderId], references: [id])
+  orderId    Int
+  menuItem   MenuItem      @relation(fields: [menuItemId], references: [id])
+  price      Decimal       @db.Decimal(60, 2)
+  quantity   Int
+  addOns     AddOn_Order[]
+}
+
+model AddOn_Order {
+  id               Int             @id @default(autoincrement())
+  addOnRef         AddOn           @relation(fields: [addOnId], references: [id])
+  MenuItem_Order   MenuItem_Order? @relation(fields: [menuItem_OrderId], references: [id])
+  menuItem_OrderId Int?
+  addOnId          Int
+  price            Decimal         @db.Decimal(60, 2)
+  leftSide         Boolean
+  rightSide        Boolean
+}
+
+model MenuItem {
+  id                 Int              @id @default(autoincrement())
+  menuItems          MenuItem_Order[]
+  discounts          Discount[]
+  name               String
+  price              Decimal          @db.Decimal(60, 2)
+  profits            Decimal          @db.Decimal(60, 2)
+  parentCategory     Category         @relation(fields: [categoryId], references: [id])
+  categoryId         Int
+  addOns             AddOn[]
+  deleted            Boolean          @default(false)
+  showQuantityPicker Boolean          @default(false)
+  showOnPOS          Boolean          @default(true)
+  showOnSite         Boolean          @default(true)
+  HasSides           Boolean          @default(false)
+}
+
+model AddOn {
+  id           Int           @id @default(autoincrement())
+  MenuItem     MenuItem      @relation(fields: [menuItemId], references: [id])
+  menuItemId   Int
+  name         String
+  price        Decimal       @db.Decimal(60, 2)
+  profits      Decimal       @db.Decimal(60, 2)
+  type         AddOnType
+  deleted      Boolean       @default(false)
+  sortPosition Int           @default(autoincrement())
+  AddOn_Order  AddOn_Order[]
+}
+
+model Order {
+  id                    Int                @id @default(autoincrement())
+  createdAt             DateTime           @default(now())
+  email                 String?
+  squareNonce           String?
+  total                 Decimal            @db.Decimal(60, 2)
+  phone                 String?
+  name                  String?
+  address1              String?
+  address2              String?
+  city                  String?
+  state                 String?
+  zip                   String?
+  serviceMethod         String
+  paymentMethod         String
+  cart                  MenuItem_Order[]
+  instructions          String?
+  status                OrderStatus
+  placedOnPOS           Boolean
+  deliveryFee           Decimal            @db.Decimal(60, 2)
+  tip                   Decimal            @db.Decimal(60, 2)
+  driver                Int?
+  creditTerminalStatus  String?
+  marketingCampaignId   Int?
+  marketingCampaign     MarketingCampaign? @relation(fields: [marketingCampaignId], references: [id])
+  discountAmount        Decimal            @db.Decimal(60, 2)
+  discount              Discount?          @relation(fields: [discountId], references: [id])
+  discountId            Int?
+  processedForMarketing Boolean            @default(false)
+}
+
+model Discount {
+  id                  Int          @id @default(autoincrement())
+  orders              Order[]
+  discountCode        String
+  createdAt           DateTime     @default(now())
+  expirationDate      DateTime?
+  discountType        DiscountType
+  categoryId          Int?
+  category            Category?    @relation(fields: [categoryId], references: [id])
+  menuItemId          Int?
+  menuItem            MenuItem?    @relation(fields: [menuItemId], references: [id])
+  numberValue         Int?
+  orderTotalThreshold Int
+  deleted             Boolean      @default(false)
+}
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String
+  discounts Discount[]
+  deleted   Boolean    @default(false)
+  MenuItem  MenuItem[]
+}
+
+model MarketingCampaign {
+  id     Int     @id @default(autoincrement())
+  orders Order[]
+}
+
+enum DiscountType {
+  FIXED
+  PERCENT
+  MENU_ITEM
+  CATEGORY
+}
+
+enum OrderStatus {
+  OPEN
+  CLOSED
+  CANCELED
+}
+
+enum AddOnType {
+  SIZE
+  TOPPING
+}
