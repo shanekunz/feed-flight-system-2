@@ -101,8 +101,8 @@ model Order {
   city                  String?
   state                 String?
   zip                   String?
-  serviceMethod         String
-  paymentMethod         String
+  serviceMethod         ServiceMethod
+  paymentMethod         PaymentMethod
   cart                  MenuItemOrder[]
   instructions          String?
   status                OrderStatus
@@ -165,4 +165,17 @@ enum OrderStatus {
 enum AddOnType {
   SIZE
   TOPPING
+}
+
+enum ServiceMethod {
+  DELIVERY
+  WALK_IN
+  CARRYOUT
+}
+
+enum PaymentMethod {
+  CREDIT_ONLINE
+  CREDIT_TERMINAL
+  CASH
+  OPEN
 }

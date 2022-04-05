@@ -30,6 +30,8 @@ export const deleteOrder = ({ id }) => {
 }
 
 export const Order = {
+  cart: (_obj, { root }) =>
+    db.order.findUnique({ where: { id: root.id } }).cart(),
   marketingCampaign: (_obj, { root }) =>
     db.order.findUnique({ where: { id: root.id } }).marketingCampaign(),
   discount: (_obj, { root }) =>

@@ -122,8 +122,8 @@ const OrdersList = ({ orders }) => {
               <td>{truncate(order.city)}</td>
               <td>{truncate(order.state)}</td>
               <td>{truncate(order.zip)}</td>
-              <td>{truncate(order.serviceMethod)}</td>
-              <td>{truncate(order.paymentMethod)}</td>
+              <td>{formatEnum(order.serviceMethod)}</td>
+              <td>{formatEnum(order.paymentMethod)}</td>
               <td>{truncate(order.instructions)}</td>
               <td>{formatEnum(order.status)}</td>
               <td>{checkboxInputTag(order.placedOnPOS)}</td>

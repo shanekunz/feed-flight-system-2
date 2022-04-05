@@ -204,13 +204,44 @@ const OrderForm = (props) => {
           Service method
         </Label>
 
-        <TextField
-          name="serviceMethod"
-          defaultValue={props.order?.serviceMethod}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-serviceMethod-0"
+            name="serviceMethod"
+            defaultValue="DELIVERY"
+            defaultChecked={props.order?.serviceMethod?.includes('DELIVERY')}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Delivery</div>
+        </div>
+
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-serviceMethod-1"
+            name="serviceMethod"
+            defaultValue="WALK_IN"
+            defaultChecked={props.order?.serviceMethod?.includes('WALK_IN')}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Walk In</div>
+        </div>
+
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-serviceMethod-2"
+            name="serviceMethod"
+            defaultValue="CARRYOUT"
+            defaultChecked={props.order?.serviceMethod?.includes('CARRYOUT')}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Carryout</div>
+        </div>
 
         <FieldError name="serviceMethod" className="rw-field-error" />
 
@@ -222,13 +253,61 @@ const OrderForm = (props) => {
           Payment method
         </Label>
 
-        <TextField
-          name="paymentMethod"
-          defaultValue={props.order?.paymentMethod}
-          className="rw-input"
-          errorClassName="rw-input rw-input-error"
-          validation={{ required: true }}
-        />
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-paymentMethod-0"
+            name="paymentMethod"
+            defaultValue="CREDIT_ONLINE"
+            defaultChecked={props.order?.paymentMethod?.includes(
+              'CREDIT_ONLINE'
+            )}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Credit Online</div>
+        </div>
+
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-paymentMethod-1"
+            name="paymentMethod"
+            defaultValue="CREDIT_TERMINAL"
+            defaultChecked={props.order?.paymentMethod?.includes(
+              'CREDIT_TERMINAL'
+            )}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Credit Terminal</div>
+        </div>
+
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-paymentMethod-2"
+            name="paymentMethod"
+            defaultValue="CASH"
+            defaultChecked={props.order?.paymentMethod?.includes('CASH')}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Cash</div>
+        </div>
+
+        <div className="rw-check-radio-items">
+          <RadioField
+            id="order-paymentMethod-3"
+            name="paymentMethod"
+            defaultValue="OPEN"
+            defaultChecked={props.order?.paymentMethod?.includes('OPEN')}
+            className="rw-input"
+            errorClassName="rw-input rw-input-error"
+          />
+
+          <div>Open</div>
+        </div>
 
         <FieldError name="paymentMethod" className="rw-field-error" />
 

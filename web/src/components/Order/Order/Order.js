@@ -122,11 +122,11 @@ const Order = ({ order }) => {
             </tr>
             <tr>
               <th>Service method</th>
-              <td>{order.serviceMethod}</td>
+              <td>{formatEnum(order.serviceMethod)}</td>
             </tr>
             <tr>
               <th>Payment method</th>
-              <td>{order.paymentMethod}</td>
+              <td>{formatEnum(order.paymentMethod)}</td>
             </tr>
             <tr>
               <th>Instructions</th>

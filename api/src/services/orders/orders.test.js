@@ -22,35 +22,35 @@ describe('orders', () => {
   scenario('creates a order', async () => {
     const result = await createOrder({
       input: {
-        total: 8775091.736666093,
-        serviceMethod: 'String',
-        paymentMethod: 'String',
+        total: 179264.0286444702,
+        serviceMethod: 'DELIVERY',
+        paymentMethod: 'CREDIT_ONLINE',
         status: 'OPEN',
         placedOnPOS: true,
-        deliveryFee: 2145361.434086659,
-        tip: 9403380.322269712,
-        discountAmount: 7926463.501235652,
+        deliveryFee: 213981.91397064892,
+        tip: 7483531.904201297,
+        discountAmount: 3746830.9648070373,
       },
     })
 
-    expect(result.total).toEqual(8775091.736666093)
-    expect(result.serviceMethod).toEqual('String')
-    expect(result.paymentMethod).toEqual('String')
+    expect(result.total).toEqual(179264.0286444702)
+    expect(result.serviceMethod).toEqual('DELIVERY')
+    expect(result.paymentMethod).toEqual('CREDIT_ONLINE')
     expect(result.status).toEqual('OPEN')
     expect(result.placedOnPOS).toEqual(true)
-    expect(result.deliveryFee).toEqual(2145361.434086659)
-    expect(result.tip).toEqual(9403380.322269712)
-    expect(result.discountAmount).toEqual(7926463.501235652)
+    expect(result.deliveryFee).toEqual(213981.91397064892)
+    expect(result.tip).toEqual(7483531.904201297)
+    expect(result.discountAmount).toEqual(3746830.9648070373)
   })
 
   scenario('updates a order', async (scenario) => {
     const original = await order({ id: scenario.order.one.id })
     const result = await updateOrder({
       id: original.id,
-      input: { total: 5351128.348490288 },
+      input: { total: 7793899.469550243 },
     })
 
-    expect(result.total).toEqual(5351128.348490288)
+    expect(result.total).toEqual(7793899.469550243)
   })
 
   scenario('deletes a order', async (scenario) => {

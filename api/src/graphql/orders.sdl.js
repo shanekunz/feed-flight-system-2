@@ -12,8 +12,9 @@ export const schema = gql`
     city: String
     state: String
     zip: String
-    serviceMethod: String!
-    paymentMethod: String!
+    serviceMethod: ServiceMethod!
+    paymentMethod: PaymentMethod!
+    cart: [MenuItemOrder]!
     instructions: String
     status: OrderStatus!
     placedOnPOS: Boolean!
@@ -29,6 +30,17 @@ export const schema = gql`
     processedForMarketing: Boolean!
   }
 
+  enum ServiceMethod {
+    DELIVERY
+    WALK_IN
+    CARRYOUT
+  }
+  enum PaymentMethod {
+    CREDIT_ONLINE
+    CREDIT_TERMINAL
+    CASH
+    OPEN
+  }
   enum OrderStatus {
     OPEN
     CLOSED
@@ -51,8 +63,8 @@ export const schema = gql`
     city: String
     state: String
     zip: String
-    serviceMethod: String!
-    paymentMethod: String!
+    serviceMethod: ServiceMethod!
+    paymentMethod: PaymentMethod!
     instructions: String
     status: OrderStatus!
     placedOnPOS: Boolean!
@@ -77,8 +89,8 @@ export const schema = gql`
     city: String
     state: String
     zip: String
-    serviceMethod: String
-    paymentMethod: String
+    serviceMethod: ServiceMethod
+    paymentMethod: PaymentMethod
     instructions: String
     status: OrderStatus
     placedOnPOS: Boolean
