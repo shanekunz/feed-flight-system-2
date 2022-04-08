@@ -65,7 +65,7 @@ const Routes = () => {
         <Route path="/discounts" page={DiscountDiscountsPage} name="discounts" />
       </Set>
       <Set wrap={OrdersLayout}>
-        <Route path="/orders/new" page={OrderNewOrderPage} name="newOrder" />
+        <Route path="/" page={OrderNewOrderPage} name="newOrder" />
         <Route path="/orders/{id:Int}/edit" page={OrderEditOrderPage} name="editOrder" />
         <Route path="/orders/{id:Int}" page={OrderOrderPage} name="order" />
         <Route path="/orders" page={OrderOrdersPage} name="orders" />
@@ -84,7 +84,7 @@ const Routes = () => {
       </Private>
       <Set wrap={BlogLayout}>
         <Route path="/about" page={AboutPage} name="about" />
-        <Route path="/" page={HomePage} name="home" />
+        <Route path="/home" page={HomePage} name="home" />
         <Route notfound page={NotFoundPage} />
         <Route path="/article/{id:Int}" page={ArticlePage} name="article" />
         <Route path="/contact" page={ContactPage} name="contact" />
