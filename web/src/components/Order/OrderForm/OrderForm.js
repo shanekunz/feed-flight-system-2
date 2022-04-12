@@ -80,6 +80,7 @@ const OrderForm = (props) => {
                 </Label>
 
                 <button
+                  type="button"
                   className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
                     service == 'DELIVERY' ? 'checked' : ''
                   }`}
@@ -99,6 +100,7 @@ const OrderForm = (props) => {
                 </button>
 
                 <button
+                  type="button"
                   className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
                     service == 'WALK_IN' ? 'checked' : ''
                   }`}
@@ -118,6 +120,7 @@ const OrderForm = (props) => {
                 </button>
 
                 <button
+                  type="button"
                   className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
                     service == 'CARRYOUT' ? 'checked' : ''
                   }`}
@@ -148,6 +151,7 @@ const OrderForm = (props) => {
                 </Label>
 
                 <button
+                  type="button"
                   className={`rw-check-radio-items pr-3 mt-2 ${
                     payment == 'CREDIT_ONLINE' ? 'checked' : ''
                   }`}
@@ -168,6 +172,7 @@ const OrderForm = (props) => {
 
                 {!service.includes('CARRYOUT') && (
                   <button
+                    type="button"
                     className={`rw-check-radio-items pr-3 mt-2 ${
                       payment == 'CREDIT_TERMINAL' ? 'checked' : ''
                     }`}
@@ -187,6 +192,7 @@ const OrderForm = (props) => {
                 )}
                 {service != 'CARRYOUT' && (
                   <button
+                    type="button"
                     className={`rw-check-radio-items pr-3 mt-2 ${
                       payment == 'CASH' ? 'checked' : ''
                     }`}
@@ -207,6 +213,7 @@ const OrderForm = (props) => {
                 )}
                 {service != 'DELIVERY' && (
                   <button
+                    type="button"
                     className={`rw-check-radio-items pr-3 mt-2 ${
                       payment == 'OPEN' ? 'checked' : ''
                     }`}
@@ -441,6 +448,7 @@ const OrderForm = (props) => {
             />
             Total: {total}
             <button
+              type="button"
               onClick={() => {
                 setPage(2)
               }}
@@ -453,6 +461,7 @@ const OrderForm = (props) => {
         {page == 2 && (
           <>
             <button
+              type="button"
               onClick={() => {
                 setPage(1)
               }}
