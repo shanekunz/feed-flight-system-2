@@ -32,7 +32,7 @@ const QUERY_ITEMS = gql`
   }
 `
 const QUERY_DISCOUNTS = gql`
-  query FindDiscounts {
+  query FindTheDiscounts {
     discounts {
       id
       discountCode
@@ -130,7 +130,7 @@ const OrderForm = (props) => {
 
                 <button
                   type="button"
-                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
+                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 w-full ${
                     service == 'DELIVERY' ? 'checked' : ''
                   }`}
                   onClick={() => setService('DELIVERY')}
@@ -150,7 +150,7 @@ const OrderForm = (props) => {
 
                 <button
                   type="button"
-                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
+                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 w-full ${
                     service == 'WALK_IN' ? 'checked' : ''
                   }`}
                   onClick={() => setService('WALK_IN')}
@@ -170,7 +170,7 @@ const OrderForm = (props) => {
 
                 <button
                   type="button"
-                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 ${
+                  className={`rw-check-radio-items cursor-pointer pr-3 mt-2 w-full ${
                     service == 'CARRYOUT' ? 'checked' : ''
                   }`}
                   onClick={() => setService('CARRYOUT')}
@@ -201,7 +201,7 @@ const OrderForm = (props) => {
 
                 <button
                   type="button"
-                  className={`rw-check-radio-items pr-3 mt-2 ${
+                  className={`rw-check-radio-items pr-3 mt-2 w-full ${
                     payment == 'CREDIT_ONLINE' ? 'checked' : ''
                   }`}
                   onClick={() => setPayment('CREDIT_ONLINE')}
@@ -222,7 +222,7 @@ const OrderForm = (props) => {
                 {!service.includes('CARRYOUT') && (
                   <button
                     type="button"
-                    className={`rw-check-radio-items pr-3 mt-2 ${
+                    className={`rw-check-radio-items pr-3 mt-2 w-full ${
                       payment == 'CREDIT_TERMINAL' ? 'checked' : ''
                     }`}
                     onClick={() => setPayment('CREDIT_TERMINAL')}
@@ -242,7 +242,7 @@ const OrderForm = (props) => {
                 {service != 'CARRYOUT' && (
                   <button
                     type="button"
-                    className={`rw-check-radio-items pr-3 mt-2 ${
+                    className={`rw-check-radio-items pr-3 mt-2 w-full ${
                       payment == 'CASH' ? 'checked' : ''
                     }`}
                     onClick={() => setPayment('CASH')}
@@ -263,7 +263,7 @@ const OrderForm = (props) => {
                 {service != 'DELIVERY' && (
                   <button
                     type="button"
-                    className={`rw-check-radio-items pr-3 mt-2 ${
+                    className={`rw-check-radio-items pr-3 mt-2 w-full ${
                       payment == 'OPEN' ? 'checked' : ''
                     }`}
                     onClick={() => setPayment('OPEN')}
