@@ -7,10 +7,13 @@ import {
   RadioField,
   NumberField,
   Submit,
-  InputField,
+  HiddenField,
+  SelectField,
 } from '@redwoodjs/forms'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
+import '../../../styles/OrderForm.scss'
 
 const QUERY_ITEMS = gql`
   query FindMenuItems {
@@ -25,6 +28,26 @@ const QUERY_ITEMS = gql`
       showOnPOS
       showOnSite
       HasSides
+    }
+  }
+`
+const QUERY_DISCOUNTS = gql`
+  query FindDiscounts {
+    discounts {
+      id
+      discountCode
+      expirationDate
+      discountType
+      category {
+        id
+        name
+      }
+      menuItem {
+        id
+        name
+      }
+      numberValue
+      orderTotalThreshold
     }
   }
 `
@@ -43,10 +66,36 @@ const OrderForm = (props) => {
   const [items, setItems] = useState([])
   const [cart, setCart] = useState([])
   const [page, setPage] = useState(1)
+  const [discounts, setDiscounts] = useState([])
+
+  const addToCart = (item) => {
+    const newCart = [...cart]
+    var searchItem = newCart.find((i) => i.id == item.id)
+    if (searchItem) {
+      searchItem.quantity++
+      setCart(newCart)
+    } else {
+      newCart.push({
+        id: item.id,
+        quantity: 1,
+        menuItemId: item.menuItemId,
+        price: item.price,
+        name: item.name,
+      })
+    }
+    setCart(newCart)
+    toast.success(item.name + ' added to cart')
+  }
 
   useQuery(QUERY_ITEMS, {
     onCompleted: function (r) {
       setItems(r.menuItems)
+    },
+  })
+
+  useQuery(QUERY_DISCOUNTS, {
+    onCompleted: function (r) {
+      setDiscounts(r.discounts)
     },
   })
 
@@ -55,7 +104,7 @@ const OrderForm = (props) => {
     cart.forEach((i) => {
       t += i.price * i.quantity
     })
-    //setTotal(t)
+    setTotal(t)
   }, [cart])
 
   return (
@@ -69,7 +118,7 @@ const OrderForm = (props) => {
         />
         {page == 1 && (
           <>
-            <div className="columns-1 md:columns-2 pt-4">
+            <div className="columns-1 sm:columns-2 pt-4">
               <div style={{ height: '255px' }}>
                 <Label
                   name="serviceMethod"
@@ -236,215 +285,216 @@ const OrderForm = (props) => {
                 <FieldError name="paymentMethod" className="rw-field-error" />
               </div>
             </div>
-            <Label
-              name="email"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Email
-            </Label>
-            <TextField
-              name="email"
-              defaultValue={props.order?.email}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="email" className="rw-field-error" />
-            <Label
-              name="phone"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Phone
-            </Label>
-            <TextField
-              name="phone"
-              defaultValue={props.order?.phone}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="phone" className="rw-field-error" />
-            <Label
-              name="name"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Name
-            </Label>
-            <TextField
-              name="name"
-              defaultValue={props.order?.name}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="name" className="rw-field-error" />
+            <div className="sm:columns-2 columns-1">
+              <div>
+                <Label
+                  name="email"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Email
+                </Label>
+                <TextField
+                  name="email"
+                  defaultValue={props.order?.email}
+                  className="rw-input"
+                  errorClassName="rw-input rw-input-error"
+                />
+                <FieldError name="email" className="rw-field-error" />
+              </div>
+              <div>
+                <Label
+                  name="phone"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Phone
+                </Label>
+                <TextField
+                  name="phone"
+                  defaultValue={props.order?.phone}
+                  className="rw-input"
+                  errorClassName="rw-input rw-input-error"
+                />
+                <FieldError name="phone" className="rw-field-error" />
+              </div>
+            </div>
+            <div className="columns-1">
+              <Label
+                name="name"
+                className="rw-label"
+                errorClassName="rw-label rw-label-error"
+              >
+                Name
+              </Label>
+              <TextField
+                name="name"
+                defaultValue={props.order?.name}
+                className="rw-input"
+                errorClassName="rw-input rw-input-error"
+              />
+              <FieldError name="name" className="rw-field-error" />
+            </div>
             {service == 'DELIVERY' && (
               <>
-                <Label
-                  name="address1"
-                  className="rw-label"
-                  errorClassName="rw-label rw-label-error"
-                >
-                  Address1
-                </Label>
-                <TextField
-                  name="address1"
-                  defaultValue={props.order?.address1}
-                  className="rw-input"
-                  errorClassName="rw-input rw-input-error"
-                />
-                <FieldError name="address1" className="rw-field-error" />
-                <Label
-                  name="address2"
-                  className="rw-label"
-                  errorClassName="rw-label rw-label-error"
-                >
-                  Address2
-                </Label>
-                <TextField
-                  name="address2"
-                  defaultValue={props.order?.address2}
-                  className="rw-input"
-                  errorClassName="rw-input rw-input-error"
-                />
-                <FieldError name="address2" className="rw-field-error" />
-                <Label
-                  name="city"
-                  className="rw-label"
-                  errorClassName="rw-label rw-label-error"
-                >
-                  City
-                </Label>
-                <TextField
-                  name="city"
-                  defaultValue={props.order?.city}
-                  className="rw-input"
-                  errorClassName="rw-input rw-input-error"
-                />
-                <FieldError name="city" className="rw-field-error" />
-                <Label
-                  name="state"
-                  className="rw-label"
-                  errorClassName="rw-label rw-label-error"
-                >
-                  State
-                </Label>
-                <TextField
-                  name="state"
-                  defaultValue={props.order?.state}
-                  className="rw-input"
-                  errorClassName="rw-input rw-input-error"
-                />
-                <FieldError name="state" className="rw-field-error" />
-                <Label
-                  name="zip"
-                  className="rw-label"
-                  errorClassName="rw-label rw-label-error"
-                >
-                  Zip
-                </Label>
-                <TextField
-                  name="zip"
-                  defaultValue={props.order?.zip}
-                  className="rw-input"
-                  errorClassName="rw-input rw-input-error"
-                />
+                <div className="flex gap-x-3.5">
+                  <div className="w-1/2">
+                    <Label
+                      name="address1"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      Address1
+                    </Label>
+                    <TextField
+                      name="address1"
+                      defaultValue={props.order?.address1}
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                    />
+                    <FieldError name="address1" className="rw-field-error" />
+                  </div>
+
+                  <div className="w-1/2">
+                    <Label
+                      name="address2"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      Address2
+                    </Label>
+                    <TextField
+                      name="address2"
+                      defaultValue={props.order?.address2}
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                    />
+                    <FieldError name="address2" className="rw-field-error" />
+                  </div>
+                </div>
+                <div className="flex gap-x-3.5">
+                  <div className="w-1/2">
+                    <Label
+                      name="city"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      City
+                    </Label>
+                    <TextField
+                      name="city"
+                      defaultValue={props.order?.city}
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                    />
+                    <FieldError name="city" className="rw-field-error" />
+                  </div>
+                  <div className="w-1/4">
+                    <Label
+                      name="state"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      State
+                    </Label>
+                    <TextField
+                      name="state"
+                      defaultValue={props.order?.state}
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                    />
+                    <FieldError name="state" className="rw-field-error" />
+                  </div>
+                  <div className="w-1/4">
+                    <Label
+                      name="zip"
+                      className="rw-label"
+                      errorClassName="rw-label rw-label-error"
+                    >
+                      Zip
+                    </Label>
+                    <TextField
+                      name="zip"
+                      defaultValue={props.order?.zip}
+                      className="rw-input"
+                      errorClassName="rw-input rw-input-error"
+                    />
+                    <FieldError name="zip" className="rw-field-error" />
+                  </div>
+                </div>
               </>
             )}
-            <Label
-              name="instructions"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Instructions
-            </Label>
-            <TextField
-              name="instructions"
-              defaultValue={props.order?.instructions}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="instructions" className="rw-field-error" />
-            <InputField
-              name="deliveryFee"
-              value={service == 'DELIVERY' ? 3 : 0}
-              className="rw-input"
-              type="hidden"
-              errorClassName="rw-input rw-input-error"
-              validation={{ valueAsNumber: true }}
-            />
-            <Label
-              name="tip"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Tip
-            </Label>
-            <TextField
-              name="tip"
-              defaultValue={props.order ? props.order.tip : 0}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-              validation={{ valueAsNumber: true, required: true }}
-            />
-            <FieldError name="tip" className="rw-field-error" />
-            <Label
-              name="driver"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Driver
-            </Label>
-            <NumberField
-              name="driver"
-              defaultValue={props.order?.driver}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="driver" className="rw-field-error" />
-            <Label
-              name="discountAmount"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Discount amount
-            </Label>
-            <TextField
-              name="discountAmount"
-              defaultValue={0}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-              validation={{ valueAsNumber: true, required: true }}
-            />
-            <FieldError name="discountAmount" className="rw-field-error" />
-            <Label
-              name="discountId"
-              className="rw-label"
-              errorClassName="rw-label rw-label-error"
-            >
-              Discount id
-            </Label>
-            <NumberField
-              name="discountId"
-              defaultValue={props.order ? props.order.discountId : 1}
-              className="rw-input"
-              errorClassName="rw-input rw-input-error"
-            />
-            <FieldError name="discountId" className="rw-field-error" />
-            {items.map((i) => (
-              <div key={i.id}>{i.id}</div>
-            ))}
-            <InputField
-              type="hidden"
+            <div className="flex gap-x-3.5">
+              <div className="w-1/2">
+                <Label
+                  name="instructions"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Instructions
+                </Label>
+                <TextField
+                  name="instructions"
+                  defaultValue={props.order?.instructions}
+                  className="rw-input"
+                  errorClassName="rw-input rw-input-error"
+                />
+                <FieldError name="instructions" className="rw-field-error" />
+              </div>
+              <div className="w-1/4">
+                <Label
+                  name="tip"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Tip
+                </Label>
+                <TextField
+                  name="tip"
+                  defaultValue={props.order ? props.order.tip : 0}
+                  className="rw-input"
+                  errorClassName="rw-input rw-input-error"
+                  validation={{ valueAsNumber: true, required: true }}
+                />
+                <FieldError name="tip" className="rw-field-error" />
+              </div>
+              <div className="w-1/4">
+                <Label
+                  name="discountId"
+                  className="rw-label"
+                  errorClassName="rw-label rw-label-error"
+                >
+                  Discount
+                </Label>
+                <SelectField
+                  name="discountId"
+                  className="rw-input"
+                  validation={{ valueAsNumber: true }}
+                >
+                  <option value=""></option>
+                  {discounts.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.discountCode}
+                    </option>
+                  ))}
+                </SelectField>
+                <FieldError name="discountId" className="rw-field-error" />
+              </div>
+            </div>
+            <HiddenField
               name="placedOnPOS"
               value={true}
               validation={{ valueAsBoolean: true, required: true }}
             />
-            <InputField
-              type="hidden"
+            <HiddenField
               name="total"
               value={total}
               validation={{ valueAsNumber: true, required: true }}
+            />
+            <HiddenField
+              name="deliveryFee"
+              value={service == 'DELIVERY' ? 3 : 0}
+              validation={{ valueAsNumber: true }}
             />
             Total: {total}
             <button
@@ -469,6 +519,24 @@ const OrderForm = (props) => {
             >
               Back
             </button>
+            {items.map((i) => (
+              <button
+                onClick={() => addToCart(i)}
+                key={i.id}
+                className="rw-button rw-button-blue"
+                type="button"
+              >
+                Add {i.name}
+              </button>
+            ))}
+            {cart.map((i) => (
+              <div key={i.id}>
+                {i.name} x {i.quantity}
+              </div>
+            ))}
+            <HiddenField name="cart[item1][menuItemId]" value="1" />
+            <HiddenField name="cart[item1][price]" value="2" />
+            <HiddenField name="cart[item1][quantity]" value="1" />
           </>
         )}
         <div className="rw-button-group">
