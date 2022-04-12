@@ -23,11 +23,7 @@ const NewOrder = () => {
   })
 
   const onSave = (input) => {
-    const castInput = Object.assign(input, {
-      marketingCampaignId: parseInt(input.marketingCampaignId),
-      discountId: parseInt(input.discountId),
-    })
-    createOrder({ variables: { input: castInput } })
+    createOrder({ variables: { input: input } })
   }
 
   return (

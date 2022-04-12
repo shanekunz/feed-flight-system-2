@@ -1,35 +1,4 @@
 export const schema = gql`
-  type Order {
-    id: Int!
-    createdAt: DateTime!
-    email: String
-    squareNonce: String
-    total: Float!
-    phone: String
-    name: String
-    address1: String
-    address2: String
-    city: String
-    state: String
-    zip: String
-    serviceMethod: ServiceMethod!
-    paymentMethod: PaymentMethod!
-    cart: [MenuItemOrder]!
-    instructions: String
-    status: OrderStatus!
-    placedOnPOS: Boolean!
-    deliveryFee: Float!
-    tip: Float!
-    driver: Int
-    creditTerminalStatus: String
-    marketingCampaignId: Int
-    marketingCampaign: MarketingCampaign
-    discountAmount: Float!
-    discount: Discount
-    discountId: Int
-    processedForMarketing: Boolean!
-  }
-
   enum ServiceMethod {
     DELIVERY
     WALK_IN
@@ -46,6 +15,36 @@ export const schema = gql`
     CLOSED
     CANCELED
   }
+  type Order {
+    id: Int!
+    createdAt: DateTime!
+    email: String
+    squareNonce: String
+    total: Float!
+    phone: String
+    name: String
+    address1: String
+    address2: String
+    city: String
+    state: String
+    zip: String
+    serviceMethod: String!
+    paymentMethod: String!
+    cart: [MenuItemOrder]!
+    instructions: String
+    status: OrderStatus!
+    placedOnPOS: Boolean!
+    deliveryFee: Float!
+    tip: Float!
+    driver: Int
+    creditTerminalStatus: String
+    marketingCampaignId: Int
+    marketingCampaign: MarketingCampaign
+    discountAmount: Float!
+    discount: Discount
+    discountId: Int
+    processedForMarketing: Boolean!
+  }
 
   type Query {
     orders: [Order!]! @requireAuth
@@ -54,7 +53,6 @@ export const schema = gql`
 
   input CreateOrderInput {
     email: String
-    squareNonce: String
     total: Float!
     phone: String
     name: String
@@ -66,16 +64,15 @@ export const schema = gql`
     serviceMethod: ServiceMethod!
     paymentMethod: PaymentMethod!
     instructions: String
-    status: OrderStatus!
     placedOnPOS: Boolean!
     deliveryFee: Float!
     tip: Float!
     driver: Int
-    creditTerminalStatus: String
     marketingCampaignId: Int
     discountAmount: Float!
     discountId: Int
-    processedForMarketing: Boolean!
+    cart: [CreateMenuItemInput]
+    closeOrderNow: Boolean
   }
 
   input UpdateOrderInput {
@@ -102,6 +99,7 @@ export const schema = gql`
     discountAmount: Float
     discountId: Int
     processedForMarketing: Boolean
+    cart: [CreateMenuItemInput]
   }
 
   type Mutation {

@@ -7,21 +7,18 @@ import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
 import './scaffold.css'
-import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 
 const App = () => (
-  <ChakraProvider>
-    <FatalErrorBoundary page={FatalErrorPage}>
-      <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
-        <AuthProvider type="dbAuth">
-          <RedwoodApolloProvider>
-            <Routes />
-          </RedwoodApolloProvider>
-        </AuthProvider>
-      </RedwoodProvider>
-    </FatalErrorBoundary>
-  </ChakraProvider>
+  <FatalErrorBoundary page={FatalErrorPage}>
+    <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+      <AuthProvider type="dbAuth">
+        <RedwoodApolloProvider>
+          <Routes />
+        </RedwoodApolloProvider>
+      </AuthProvider>
+    </RedwoodProvider>
+  </FatalErrorBoundary>
 )
 
 export default App

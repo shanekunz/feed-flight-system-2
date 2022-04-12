@@ -20,6 +20,7 @@ export const schema = gql`
     orderId: Int!
     price: Float!
     quantity: Int!
+    addOns: [CreateAddOnInput]
   }
 
   input UpdateMenuItemOrderInput {

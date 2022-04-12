@@ -11,6 +11,27 @@ export const order = ({ id }) => {
 }
 
 export const createOrder = ({ input }) => {
+  console.log(input)
+  input.discount = {
+    connect: {
+      id: input.discountId,
+    },
+  }
+  delete input.discountId
+  if (input.marketingCampaignId) {
+    input.marketingCampaigns = {
+      connect: {
+        id: input.marketingCampaignId,
+      },
+    }
+    delete input.marketingCampaign
+  }
+  input.processedForMarketing = false
+  if (input.closeOrderNow) {
+    input.status = 'CLOSED'
+  } else {
+    input.status = 'OPEN'
+  }
   return db.order.create({
     data: input,
   })

@@ -58,23 +58,6 @@ model AddOnOrder {
   rightSide       Boolean
 }
 
-model MenuItem {
-  id                 Int             @id @default(autoincrement())
-  menuItems          MenuItemOrder[]
-  discounts          Discount[]
-  name               String
-  price              Decimal         @db.Decimal(60, 2)
-  profits            Decimal         @db.Decimal(60, 2)
-  parentCategory     Category        @relation(fields: [categoryId], references: [id])
-  categoryId         Int
-  addOns             AddOn[]
-  deleted            Boolean         @default(false)
-  showQuantityPicker Boolean         @default(false)
-  showOnPOS          Boolean         @default(true)
-  showOnSite         Boolean         @default(true)
-  HasSides           Boolean         @default(false)
-}
-
 model AddOn {
   id           Int          @id @default(autoincrement())
   MenuItem     MenuItem     @relation(fields: [menuItemId], references: [id])
@@ -117,6 +100,23 @@ model Order {
   discount              Discount?          @relation(fields: [discountId], references: [id])
   discountId            Int?
   processedForMarketing Boolean            @default(false)
+}
+
+model MenuItem {
+  id                 Int             @id @default(autoincrement())
+  menuItems          MenuItemOrder[]
+  discounts          Discount[]
+  name               String
+  price              Decimal         @db.Decimal(60, 2)
+  profits            Decimal         @db.Decimal(60, 2)
+  parentCategory     Category        @relation(fields: [categoryId], references: [id])
+  categoryId         Int
+  addOns             AddOn[]
+  deleted            Boolean         @default(false)
+  showQuantityPicker Boolean         @default(false)
+  showOnPOS          Boolean         @default(true)
+  showOnSite         Boolean         @default(true)
+  HasSides           Boolean         @default(false)
 }
 
 model Discount {

@@ -230,7 +230,16 @@
 .rw-check-radio-items {
   display: flex;
   justify-items: center;
+  align-items: center;
+  background-color: lightgray;
+  border-radius: 15px;
+  border: 1px solid gray;
+  cursor: pointer;
 }
+.rw-check-radio-items.checked {
+  background-color: lightgreen;
+}
+
 .rw-input[type='checkbox'] {
   display: inline;
   width: 1rem;
@@ -240,10 +249,9 @@
 }
 .rw-input[type='radio'] {
   display: inline;
-  width: 1rem;
-  margin-left: 0;
-  margin-right: 0.5rem;
-  margin-top: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
 }
 .rw-input:focus {
   border-color: #a0aec0;
