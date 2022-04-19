@@ -27,7 +27,7 @@ const NewOrder = () => {
   }
 
   return (
-    <div className="rw-segment">
+    <div className="rw-segment mt-24">
       <header className="rw-segment-header">
         <h2 className="rw-heading rw-heading-secondary">New Order</h2>
       </header>

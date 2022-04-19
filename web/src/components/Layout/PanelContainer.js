@@ -1,12 +1,13 @@
-const PanelContainer = {
-  baseStyle: {
-    p: "30px 15px",
-    minHeight: "calc(100vh - 123px)",
-  },
-};
+import { Box, useStyleConfig } from "@chakra-ui/react";
+function PanelContainer(props) {
+  const { variant, children, ...rest } = props;
+  const styles = useStyleConfig("PanelContainer", { variant });
+  // Pass the computed styles into the `__css` prop
+  return (
+    <Box __css={styles} {...rest}>
+      {children}
+    </Box>
+  );
+}
 
-export const PanelContainerComponent = {
-  components: {
-    PanelContainer,
-  },
-};
+export default PanelContainer;

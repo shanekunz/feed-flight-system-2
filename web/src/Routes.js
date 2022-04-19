@@ -18,6 +18,7 @@ import DiscountsLayout from 'src/layouts/DiscountsLayout'
 import OrdersLayout from 'src/layouts/OrdersLayout'
 import PostsLayout from 'src/layouts/PostsLayout'
 import BlogLayout from 'src/layouts/BlogLayout'
+import AdminLayout from './layouts/AdminLayout/AdminLayout'
 
 const Routes = () => {
   return (
@@ -64,7 +65,7 @@ const Routes = () => {
         <Route path="/discounts/{id:Int}" page={DiscountDiscountPage} name="discount" />
         <Route path="/discounts" page={DiscountDiscountsPage} name="discounts" />
       </Set>
-      <Set wrap={OrdersLayout}>
+      <Set wrap={AdminLayout}>
         <Route path="/" page={OrderNewOrderPage} name="newOrder" />
         <Route path="/orders/{id:Int}/edit" page={OrderEditOrderPage} name="editOrder" />
         <Route path="/orders/{id:Int}" page={OrderOrderPage} name="order" />
