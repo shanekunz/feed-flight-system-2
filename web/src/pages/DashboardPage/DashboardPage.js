@@ -20,13 +20,13 @@ import {
 } from "src/components/Icons/Icons.js";
 import React from "react";
 import { dashboardTableData, timelineData } from "src/variables/general";
-import ActiveUsers from "./components/ActiveUsers";
-import BuiltByDevelopers from "./components/BuiltByDevelopers";
-import MiniStatistics from "./components/MiniStatistics";
-import OrdersOverview from "./components/OrdersOverview";
-import Projects from "./components/Projects";
-import SalesOverview from "./components/SalesOverview";
-import WorkWithTheRockets from "./components/WorkWithTheRockets";
+import ActiveUsers from "../../views/Dashboard/Dashboard/components/ActiveUsers";
+import BuiltByDevelopers from "../../views/Dashboard/Dashboard/components/BuiltByDevelopers";
+import MiniStatistics from "../../views/Dashboard/Dashboard/components/MiniStatistics";
+import OrdersOverview from "../../views/Dashboard/Dashboard/components/OrdersOverview";
+import Projects from "../../views/Dashboard/Dashboard/components/Projects";
+import SalesOverview from "../../views/Dashboard/Dashboard/components/SalesOverview";
+import WorkWithTheRockets from "../../views/Dashboard/Dashboard/components/WorkWithTheRockets";
 
 export default function Dashboard() {
   const iconBoxInside = useColorModeValue("white", "white");
@@ -72,7 +72,7 @@ export default function Dashboard() {
           }
           image={
             <Image
-              src={logoChakra}
+              src={peopleImage}
               alt='chakra image'
               minWidth={{ md: "300px", lg: "auto" }}
             />

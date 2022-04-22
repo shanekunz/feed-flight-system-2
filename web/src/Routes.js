@@ -23,6 +23,7 @@ import AdminLayout from './layouts/AdminLayout/AdminLayout'
 const Routes = () => {
   return (
     <Router>
+
       <Set wrap={MarketingCampaignsLayout}>
         <Route path="/marketing-campaigns/new" page={MarketingCampaignNewMarketingCampaignPage} name="newMarketingCampaign" />
         <Route path="/marketing-campaigns/{id:Int}/edit" page={MarketingCampaignEditMarketingCampaignPage} name="editMarketingCampaign" />
@@ -65,7 +66,7 @@ const Routes = () => {
         <Route path="/discounts/{id:Int}" page={DiscountDiscountPage} name="discount" />
         <Route path="/discounts" page={DiscountDiscountsPage} name="discounts" />
       </Set>
-      <Set wrap={AdminLayout}>
+      <Set wrap={AdminLayout}><Route path="/dashboard" page={DashboardPage} name="dashboard" />
         <Route path="/" page={OrderNewOrderPage} name="newOrder" />
         <Route path="/orders/{id:Int}/edit" page={OrderEditOrderPage} name="editOrder" />
         <Route path="/orders/{id:Int}" page={OrderOrderPage} name="order" />

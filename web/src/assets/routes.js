@@ -1,5 +1,5 @@
 // import
-import Dashboard from 'src/views/Dashboard/Dashboard'
+import Dashboard from 'src/pages/DashboardPage'
 import Tables from 'src/views/Dashboard/Tables'
 import Billing from 'src/views/Dashboard/Billing'
 import RTLPage from 'src/views/Dashboard/RTL'
