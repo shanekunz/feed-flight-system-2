@@ -13,7 +13,7 @@ import { CreativeTimLogo } from "src/components/Icons/Icons";
 import { Separator } from "src/components/Separator/Separator";
 import { SidebarHelp } from "src/components/Sidebar/SidebarHelp";
 import React from "react";
-import { Link as Link2 } from "@redwoodjs/router";
+import { Link as Link2, routes as routes2 } from "@redwoodjs/router";
 
 // this function creates the links and collapses that appear in the sidebar (left menu)
 
@@ -65,8 +65,19 @@ const SidebarContent = ({ logoText, routes }) => {
           </div>
         );
       }
+      let route
+      try {
+        route= routes2[prop.path.replace(/\//g, '')]
+        if(!route){
+          route = routes2.login
+        }
+      } catch {
+        route = routes2.login
+      }
+      console.log(prop.path, 'route')
       return (
-        <Link2 to={prop.layout + prop.path} key={prop.name}>
+        <div key={prop.name}>
+        <Link2 to={route()} >
           {activeRoute(prop.layout + prop.path) === "active" ? (
             <Button
               boxSize="initial"
@@ -169,6 +180,7 @@ const SidebarContent = ({ logoText, routes }) => {
             </Button>
           )}
         </Link2>
+        </div>
       );
     });
   };

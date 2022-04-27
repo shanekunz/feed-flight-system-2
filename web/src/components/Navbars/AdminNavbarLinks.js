@@ -27,7 +27,8 @@ import SidebarResponsive from 'src/components/Sidebar/SidebarResponsive'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Link as Link2 } from '@redwoodjs/router'
-import routes from 'src/assets/routes.js'
+import routes from 'src/components/routes.js'
+import { routes as routes2 } from "@redwoodjs/router"
 
 export default function HeaderLinks(props) {
   const { variant, children, fixed, secondary, onOpen, ...rest } = props
@@ -93,7 +94,7 @@ export default function HeaderLinks(props) {
           borderRadius="inherit"
         />
       </InputGroup>
-      <Link2 to="/auth/signin">
+      <Link2 to={routes2.login()}>
         <Button
           ms="0px"
           px="0px"

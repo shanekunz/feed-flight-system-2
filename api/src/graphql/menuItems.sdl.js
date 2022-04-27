@@ -17,8 +17,8 @@ export const schema = gql`
   }
 
   type Query {
-    menuItems: [MenuItem!]! @requireAuth
-    menuItem(id: Int!): MenuItem @requireAuth
+    menuItems: [MenuItem!]! @skipAuth
+    menuItem(id: Int!): MenuItem @skipAuth
   }
 
   input CreateMenuItemInput {

@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 import '../../../styles/OrderForm.scss'
+import { SimpleGrid, Box } from '@chakra-ui/react'
 
 const QUERY_ITEMS = gql`
   query FindMenuItems {
@@ -68,6 +69,14 @@ const OrderForm = (props) => {
   const [page, setPage] = useState(1)
   const [discounts, setDiscounts] = useState([])
 
+  const currency = (number) => {
+    let formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    })
+    return formatter.format(number)
+  }
+
   const addToCart = (item) => {
     const newCart = [...cart]
     var searchItem = newCart.find((i) => i.id == item.id)
@@ -104,8 +113,11 @@ const OrderForm = (props) => {
     cart.forEach((i) => {
       t += i.price * i.quantity
     })
+    if (service == 'DELIVERY') {
+      t += 3
+    }
     setTotal(t)
-  }, [cart])
+  }, [cart, service])
 
   return (
     <div className="rw-form-wrapper">
@@ -496,7 +508,13 @@ const OrderForm = (props) => {
               value={service == 'DELIVERY' ? 3 : 0}
               validation={{ valueAsNumber: true }}
             />
-            Total: {total}
+            <br />
+            {service == 'DELIVERY' ? 'Delivery: $3.00' : ''}
+            <br />
+            <br />
+            Total: {currency(total)}
+            <br />
+            <br />
             <button
               type="button"
               onClick={() => {
@@ -515,20 +533,28 @@ const OrderForm = (props) => {
               onClick={() => {
                 setPage(1)
               }}
-              className="rw-button rw-button-red"
+              className="rw-button rw-button-red mt-5"
             >
               Back
             </button>
-            {items.map((i) => (
-              <button
-                onClick={() => addToCart(i)}
-                key={i.id}
-                className="rw-button rw-button-blue"
-                type="button"
-              >
-                Add {i.name}
-              </button>
-            ))}
+            <SimpleGrid columns={3} spacingX="40px" spacingY="20px">
+              {items.map((i) => (
+                <Box key={i.id}>
+                  <img src={i.image_url} alt={i.name + ' image'} />
+                  {i.name}
+                  <br />
+                  {currency(i.price)}
+                  <button
+                    onClick={() => addToCart(i)}
+                    key={i.id}
+                    className="rw-button rw-button-blue"
+                    type="button"
+                  >
+                    Add to Cart
+                  </button>
+                </Box>
+              ))}
+            </SimpleGrid>
             {cart.map((i) => (
               <div key={i.id}>
                 {i.name} x {i.quantity}
@@ -539,11 +565,16 @@ const OrderForm = (props) => {
             <HiddenField name="cart[item1][quantity]" value="1" />
           </>
         )}
-        <div className="rw-button-group">
-          <Submit disabled={props.loading} className="rw-button rw-button-blue">
-            Save
-          </Submit>
-        </div>
+        {page == 2 && (
+          <div className="rw-button-group">
+            <Submit
+              disabled={props.loading}
+              className="rw-button rw-button-blue"
+            >
+              Save
+            </Submit>
+          </div>
+        )}
       </Form>
     </div>
   )

@@ -17,6 +17,8 @@ import {
   SupportIcon,
 } from 'src/components/Icons/Icons'
 
+import { routes } from '@redwoodjs/router'
+
 var dashRoutes = [
   {
     path: '/dashboard',
@@ -24,7 +26,7 @@ var dashRoutes = [
     rtlName: 'لوحة القيادة',
     icon: <HomeIcon color="inherit" />,
     component: Dashboard,
-    layout: '/admin',
+    layout: '',
   },
   {
     path: '/tables',
@@ -32,7 +34,7 @@ var dashRoutes = [
     rtlName: 'لوحة القيادة',
     icon: <StatsIcon color="inherit" />,
     component: Tables,
-    layout: '/admin',
+    layout: '',
   },
   {
     path: '/billing',
@@ -40,7 +42,7 @@ var dashRoutes = [
     rtlName: 'لوحة القيادة',
     icon: <CreditIcon color="inherit" />,
     component: Billing,
-    layout: '/admin',
+    layout: '',
   },
   {
     path: '/rtl-support-page',
@@ -48,7 +50,7 @@ var dashRoutes = [
     rtlName: 'آرتيإل',
     icon: <SupportIcon color="inherit" />,
     component: RTLPage,
-    layout: '/rtl',
+    layout: '',
   },
   {
     name: 'ACCOUNT PAGES',
@@ -63,15 +65,15 @@ var dashRoutes = [
         icon: <PersonIcon color="inherit" />,
         secondaryNavbar: true,
         component: Profile,
-        layout: '/admin',
+        layout: '',
       },
       {
-        path: '/signin',
+        path: '/login',
         name: 'Sign In',
         rtlName: 'لوحة القيادة',
         icon: <DocumentIcon color="inherit" />,
         component: SignIn,
-        layout: '/auth',
+        layout: '',
       },
       {
         path: '/signup',
@@ -80,9 +82,12 @@ var dashRoutes = [
         icon: <RocketIcon color="inherit" />,
         secondaryNavbar: true,
         component: SignUp,
-        layout: '/auth',
+        layout: '',
       },
     ],
   },
 ]
+dashRoutes.forEach(d => {
+  d.route = routes.login
+})
 export default dashRoutes
